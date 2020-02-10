@@ -1,3 +1,4 @@
+import dataclasses
 import json
 from dataclasses import dataclass
 from datetime import datetime
@@ -5,6 +6,13 @@ from typing import List, Dict, Any
 
 JsonDict = Dict[str, Any]
 
+class DateTimeEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if dataclasses.is_dataclass(obj):
+            return dataclasses.asdict(obj)
+        if isinstance(obj, datetime):
+            return obj.isoformat()
+        return super(DateTimeEncoder, self).default(obj)
 
 @dataclass
 class RdapDomainEntry:
@@ -57,4 +65,7 @@ class RdapDomainEntry:
         return cls(rr['ldhName'].lower(), registered, updated, expires, '', nameservers, rr['status'][0])
 
     def to_json(self):
-        return json.dumps(self)
+        return json.dumps(self, cls=DateTimeEncoder)
+
+    def to_dict(self):
+        return dataclasses.asdict(self)

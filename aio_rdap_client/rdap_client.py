@@ -2,9 +2,10 @@ import aiohttp
 from tldextract import tldextract
 from async_lru import alru_cache
 
-from RdapResponse import RdapDomainEntry
+from aio_rdap_client.RdapResponse import RdapDomainEntry
 
-class async_rdap_client():
+
+class AsyncRdapClient:
 
     def __init__(self, caching=True):
         self.server_list = {}
@@ -26,7 +27,7 @@ class async_rdap_client():
             async with aiohttp.ClientSession() as session:
                 res = await self._fetch_json(session, "%s/domain/%s" %(authorative_server, domain ))
                 entry = RdapDomainEntry.from_rdap_response(res)
-                print(str(entry))
+                return entry
         except KeyError:
             raise LookupError("No rdap server found for domain: %s" % domain)
 

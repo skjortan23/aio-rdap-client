@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="aio-rdap-client", # Replace with your own username
-    version="0.0.4",
+    name="aio-rdap-client",
+    version="0.1.3",
     author="Thomas Olofsson (@skjortan)",
     author_email="skjortan@gmail.com",
     description="An async rdap client for domain registrar information",
@@ -18,10 +18,10 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=[
-        'aiohttp>=3.6.2'
-        'tldextract>=2.2.2'
-        'async_lru>=1.0.2'
-    ],
+    # install_requires=[
+    #     'aiohttp==3.6.2'
+    #     'tldextract==2.2.2'
+    #     'async_lru==1.0.2'
+    # ],
     python_requires='>=3.7',
 )
