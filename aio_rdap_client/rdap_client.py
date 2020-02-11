@@ -22,10 +22,11 @@ class AsyncRdapClient:
         if not self.bootstraped:
             await self.bootstrap()
         tld = tldextract.extract(domain).suffix
+        apex_domain = tldextract.extract(domain).registered_domain
         try:
             authorative_server = self.server_list[tld]
             async with aiohttp.ClientSession() as session:
-                res = await self._fetch_json(session, "%s/domain/%s" %(authorative_server, domain ))
+                res = await self._fetch_json(session, "%sdomain/%s" %(authorative_server, apex_domain ))
                 entry = RdapDomainEntry.from_rdap_response(res)
                 return entry
         except KeyError:

@@ -7,7 +7,7 @@ from aio_rdap_client.rdap_client import AsyncRdapClient
 class Test_rdap(TestCase):
     def setUp(self) -> None:
         self.rdap = AsyncRdapClient(caching=False)
-        self.valid_domains = ['intelliagg.com', 'threatfinder.com', 'test.uk']
+        self.valid_domains = ['intelliagg.com', 'threatfinder.com', 'test.uk', "hyperion.ortal.com", "hyper.ortal.com"]
 
     def test_bootstrap(self):
         loop = asyncio.get_event_loop()
