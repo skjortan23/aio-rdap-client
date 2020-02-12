@@ -46,7 +46,7 @@ class RdapDomainEntry:
         expires = None
 
         for event in events:
-            date = datetime.fromisoformat(event.get('eventDate').replace("Z", "+00:00"))
+            date = datetime.fromisoformat(event.get('eventDate').replace("Z", ""))
             event_type = event.get('eventAction')
             if event_type == 'registration':
                 registered = date
