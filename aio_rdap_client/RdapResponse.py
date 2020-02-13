@@ -3,6 +3,7 @@ import json
 from dataclasses import dataclass
 from datetime import datetime
 from typing import List, Dict, Any
+import dateparser
 
 JsonDict = Dict[str, Any]
 
@@ -46,7 +47,7 @@ class RdapDomainEntry:
         expires = None
 
         for event in events:
-            date = datetime.fromisoformat(event.get('eventDate').replace("Z", ""))
+            date = dateparser.parse(event.get('eventDate'))
             event_type = event.get('eventAction')
             if event_type == 'registration':
                 registered = date
