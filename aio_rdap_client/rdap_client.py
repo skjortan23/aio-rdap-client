@@ -27,8 +27,11 @@ class AsyncRdapClient:
             authorative_server = self.server_list[tld]
             async with aiohttp.ClientSession() as session:
                 res = await self._fetch_json(session, "%sdomain/%s" %(authorative_server, apex_domain ))
-                entry = RdapDomainEntry.from_rdap_response(res)
-                return entry
+                if res:
+                    entry = RdapDomainEntry.from_rdap_response(res)
+                    return entry
+                else:
+                    raise LookupError('no valid rdap data received')
         except KeyError:
             raise LookupError("No rdap server found for domain: %s" % domain)
 
