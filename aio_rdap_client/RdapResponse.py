@@ -71,9 +71,8 @@ class RdapDomainEntry:
     def to_dict(self):
         return dataclasses.asdict(self)
 
-    @classmethod
     def is_old(self):
-        if self.updated < datetime.now() - timedelta(days=90):
+        if self.updated.replace(tzinfo=None) < datetime.now() - timedelta(days=90):
             return True
         else:
             return False

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="aio-rdap-client",
-    version="0.1.7",
+    version="0.1.8",
     author="Thomas Olofsson (@skjortan)",
     author_email="skjortan@gmail.com",
     description="An async rdap client for domain registrar information",
