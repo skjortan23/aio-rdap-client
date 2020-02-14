@@ -1,7 +1,7 @@
 import dataclasses
 import json
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import List, Dict, Any
 import dateparser
 
@@ -23,7 +23,7 @@ class RdapDomainEntry:
     expires: datetime
     status: str
     registrar: str
-    namservers: List[str]
+    nameservers: List[str]
     secureDNS: bool
 
     def __init__(self, domain, registered, updated, expires, registrar, nameservers: List[str], status: str):
@@ -32,7 +32,7 @@ class RdapDomainEntry:
         self.updated = updated
         self.expires = expires
         self.registrar = registrar
-        self.namservers = nameservers
+        self.nameservers = nameservers
         self.status = status
         self.secureDNS = False
 
@@ -70,3 +70,10 @@ class RdapDomainEntry:
 
     def to_dict(self):
         return dataclasses.asdict(self)
+
+    @classmethod
+    def is_old(self):
+        if self.updated < datetime.now() - timedelta(days=90):
+            return True
+        else:
+            return False
